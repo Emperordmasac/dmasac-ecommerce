@@ -1,7 +1,8 @@
 // Internal import
 import { useState, useEffect } from "react";
 import { auth } from "../../utils/firebase";
-import { sendSignInLinkToEmail } from "firebase/auth";
+import { signInWithEmailLink } from "firebase/auth";
+import { updatePassword } from "firebase/auth";
 
 // External import
 import { toast } from "react-toastify";
@@ -32,6 +33,34 @@ const CompleteRegistrationForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if (!email || !password) {
+            toast.error("Email and Password is required");
+            return;
+        }
+
+        if (password.length < 6) {
+            toast.error("password must be at least 8 characters long");
+            return;
+        }
+
+        try {
+            const result = await signInWithEmailLink(
+                auth,
+                email,
+                window.location.href
+            );
+            if (result.user.emailVerified) {
+                window.localStorage.removeItem("emailForRegistration");
+                let user = auth.currentUser;
+                await updatePassword(user, password);
+                const idTokenResult = await user.getIdTokenResult();
+                console.log("----->", idTokenResult);
+            }
+        } catch (error) {
+            console.log(error);
+            toast.error(error);
+        }
     };
 
     return (

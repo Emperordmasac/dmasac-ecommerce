@@ -51,7 +51,7 @@ const RegisterForm = () => {
                 autoFocus
                 placeholder="Enter a valid email address"
             />
-
+            <br />
             <button type="submit" className="btn btn-raised">
                 Register
             </button>
