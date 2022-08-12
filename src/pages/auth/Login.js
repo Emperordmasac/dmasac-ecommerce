@@ -1,5 +1,5 @@
 // Internal import
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 // External import
 import { toast } from "react-toastify";
@@ -11,8 +11,8 @@ import {
     GoogleAuthProvider,
     signInWithPopup,
 } from "firebase/auth";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
     const [loading, setLoading] = useState(false);
@@ -35,11 +35,18 @@ const Login = () => {
 
 const LoginForm = ({ setLoading }) => {
     const [email, setEmail] = useState("horlaymilekan.dev@gmail.com");
-    const [password, setPassword] = useState("mosobalaje");
+    const [password, setPassword] = useState("babaalaja");
 
     let navigate = useNavigate();
     let dispatch = useDispatch();
     let provider = new GoogleAuthProvider();
+
+    const { user } = useSelector((state) => ({ ...state }));
+
+    useEffect(() => {
+        if (user && user.token) navigate("/");
+        // eslint-disable-next-line
+    }, [user]);
 
     const auth = getAuth();
 
@@ -147,6 +154,10 @@ const LoginForm = ({ setLoading }) => {
             >
                 Login with Google
             </Button>
+
+            <Link to="/forgot/password" className="text-danger float-right">
+                Forgot Password
+            </Link>
         </form>
     );
 };

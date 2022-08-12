@@ -5,6 +5,7 @@ import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import Header from "./components/Header";
 import RegisterComplete from "./pages/auth/RegisterComplete";
+import ForgotPassword from "./pages/auth/ForgotPassword";
 
 // External import
 import { Route, Routes } from "react-router-dom";
@@ -45,6 +46,11 @@ const App = () => {
                     exact
                     path="/register/complete"
                     element={<RegisterComplete />}
+                />
+                <Route
+                    exact
+                    path="/forgot/password"
+                    element={<ForgotPassword />}
                 />
             </Routes>
         </>

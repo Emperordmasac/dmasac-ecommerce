@@ -1,10 +1,12 @@
 // Internal import
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { auth } from "../../utils/firebase";
 import { sendSignInLinkToEmail } from "firebase/auth";
 
 // External import
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Register = () => {
     return (
@@ -21,6 +23,14 @@ const Register = () => {
 
 const RegisterForm = () => {
     const [email, setEmail] = useState("");
+
+    let navigate = useNavigate();
+    const { user } = useSelector((state) => ({ ...state }));
+
+    useEffect(() => {
+        if (user && user.token) navigate("/");
+        // eslint-disable-next-line
+    }, [user]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
