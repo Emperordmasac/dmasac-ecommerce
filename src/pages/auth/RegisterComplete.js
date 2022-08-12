@@ -6,7 +6,7 @@ import { updatePassword } from "firebase/auth";
 
 // External import
 import { toast } from "react-toastify";
-// import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const RegisterComplete = () => {
     return (
@@ -24,6 +24,7 @@ const RegisterComplete = () => {
 const CompleteRegistrationForm = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const navigate = useNavigate();
 
     useEffect(() => {
         setEmail(window.localStorage.getItem("emailForRegistration"));
@@ -56,6 +57,8 @@ const CompleteRegistrationForm = () => {
                 await updatePassword(user, password);
                 const idTokenResult = await user.getIdTokenResult();
                 console.log("----->", idTokenResult);
+                // redirect
+                navigate("/");
             }
         } catch (error) {
             console.log(error);
