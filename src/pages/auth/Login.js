@@ -4,31 +4,42 @@ import { useState } from "react";
 // External import
 import { toast } from "react-toastify";
 import { Button } from "antd";
-import { MailOutlined } from "@ant-design/icons";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { MailOutlined, GoogleOutlined } from "@ant-design/icons";
+import {
+    getAuth,
+    signInWithEmailAndPassword,
+    GoogleAuthProvider,
+    signInWithPopup,
+} from "firebase/auth";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+    const [loading, setLoading] = useState(false);
+
     return (
         <div className="container p-5">
             <div className="row">
                 <div className="col-md-6 offset-md-3">
-                    <h4>Login</h4>
-                    <LoginForm />
+                    {loading ? (
+                        <h4 className="text-danger">Loading...</h4>
+                    ) : (
+                        <h4>Login</h4>
+                    )}
+                    <LoginForm setLoading={setLoading} />
                 </div>
             </div>
         </div>
     );
 };
 
-const LoginForm = () => {
+const LoginForm = ({ setLoading }) => {
     const [email, setEmail] = useState("horlaymilekan.dev@gmail.com");
     const [password, setPassword] = useState("mosobalaje");
-    const [loading, setLoading] = useState(false);
 
     let navigate = useNavigate();
     let dispatch = useDispatch();
+    let provider = new GoogleAuthProvider();
 
     const auth = getAuth();
 
@@ -45,13 +56,42 @@ const LoginForm = () => {
                         type: "LOGGED_IN_USER",
                         payload: {
                             email: user.email,
-                            idTokenResult: idTokenResult,
+                            token: idTokenResult,
                         },
                     });
                     toast.success("Login Successful");
                     navigate("/");
                 }
             );
+        } catch (error) {
+            console.log(error);
+            toast.error(error.message);
+            setLoading(false);
+        }
+    };
+
+    const handleGoogleLogin = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+        try {
+            signInWithPopup(auth, provider).then((result) => {
+                // This gives you a Google Access Token. You can use it to access the Google API.
+                const credential =
+                    GoogleAuthProvider.credentialFromResult(result);
+                const token = credential.accessToken;
+                // The signed-in user info.
+                const user = result.user;
+                // ...
+                dispatch({
+                    type: "LOGGED_IN_USER",
+                    payload: {
+                        email: user.email,
+                        token: token,
+                    },
+                });
+                toast.success("Login Successful");
+                navigate("/");
+            });
         } catch (error) {
             console.log(error);
             toast.error(error.message);
@@ -93,7 +133,19 @@ const LoginForm = () => {
                 size="large"
                 className="mb-3"
             >
-                Login with Enail / Password
+                Login with Email & Password
+            </Button>
+            <br />
+            <Button
+                onClick={handleGoogleLogin}
+                type="danger"
+                shape="round"
+                block
+                icon={<GoogleOutlined />}
+                size="large"
+                className="mb-3"
+            >
+                Login with Google
             </Button>
         </form>
     );
