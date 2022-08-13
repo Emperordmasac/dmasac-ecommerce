@@ -13,6 +13,7 @@ import {
 } from "firebase/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Login = () => {
     const [loading, setLoading] = useState(false);
@@ -59,13 +60,16 @@ const LoginForm = ({ setLoading }) => {
                     // Signed in
                     const user = userCredential.user;
                     const idTokenResult = user.accessToken;
-                    dispatch({
-                        type: "LOGGED_IN_USER",
-                        payload: {
-                            email: user.email,
-                            token: idTokenResult,
-                        },
-                    });
+                    createOrUpdateUser(idTokenResult)
+                        .then((res) => console.log("CREATE_OR_UPDATEUSER", res))
+                        .catch();
+                    // dispatch({
+                    //     type: "LOGGED_IN_USER",
+                    //     payload: {
+                    //         email: user.email,
+                    //         token: idTokenResult,
+                    //     },
+                    // });
                     toast.success("Login Successful");
                     navigate("/");
                 }
@@ -159,6 +163,18 @@ const LoginForm = ({ setLoading }) => {
                 Forgot Password
             </Link>
         </form>
+    );
+};
+
+const createOrUpdateUser = async (authToken) => {
+    return await axios.post(
+        `${process.env.REACT_APP_API}/create_or_update_user`,
+        {},
+        {
+            headers: {
+                authToken,
+            },
+        }
     );
 };
 
