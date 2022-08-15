@@ -1,3 +1,3 @@
-const Home = () => <div className="App">React home</div>;
+const Home = () => <div className="App">Eccomerce home</div>;
 
 export default Home;
