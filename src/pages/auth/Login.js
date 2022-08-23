@@ -1,16 +1,17 @@
 // Internal import
 import { useState, useEffect } from "react";
+import { auth, googleAuthProvider } from "../../utils/firebase";
 
 // External import
 import { toast } from "react-toastify";
 import { Button } from "antd";
 import { MailOutlined, GoogleOutlined } from "@ant-design/icons";
-import {
-    getAuth,
-    signInWithEmailAndPassword,
-    GoogleAuthProvider,
-    signInWithPopup,
-} from "firebase/auth";
+// import {
+//     getAuth,
+//     signInWithEmailAndPassword,
+//     GoogleAuthProvider,
+//     signInWithPopup,
+// } from "firebase/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -40,7 +41,7 @@ const LoginForm = ({ setLoading }) => {
 
     let navigate = useNavigate();
     let dispatch = useDispatch();
-    let provider = new GoogleAuthProvider();
+    // let provider = new GoogleAuthProvider();
 
     const { user } = useSelector((state) => ({ ...state }));
 
@@ -49,31 +50,37 @@ const LoginForm = ({ setLoading }) => {
         // eslint-disable-next-line
     }, [user]);
 
-    const auth = getAuth();
+    // const auth = getAuth();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
+
         try {
-            signInWithEmailAndPassword(auth, email, password).then(
-                (userCredential) => {
-                    // Signed in
-                    const user = userCredential.user;
-                    const idTokenResult = user.accessToken;
-                    createOrUpdateUser(idTokenResult)
-                        .then((res) => console.log("CREATE_OR_UPDATEUSER", res))
-                        .catch();
-                    // dispatch({
-                    //     type: "LOGGED_IN_USER",
-                    //     payload: {
-                    //         email: user.email,
-                    //         token: idTokenResult,
-                    //     },
-                    // });
-                    toast.success("Login Successful");
-                    navigate("/");
-                }
+            const result = await auth.signInWithEmailAndPassword(
+                email,
+                password
             );
+            // console.log(result);
+            const { user } = result;
+            const idTokenResult = await user.getIdTokenResult();
+
+            createOrUpdateUser(idTokenResult.token)
+                .then((res) =>
+                    dispatch({
+                        type: "LOGGED_IN_USER",
+                        payload: {
+                            name: res.data.name,
+                            email: res.data.email,
+                            token: idTokenResult.token,
+                            roles: res.data.roles,
+                            _id: res.data._id,
+                        },
+                    })
+                )
+                .catch();
+
+            navigate("/");
         } catch (error) {
             console.log(error);
             toast.error(error.message);
@@ -81,33 +88,39 @@ const LoginForm = ({ setLoading }) => {
         }
     };
 
-    const handleGoogleLogin = async (e) => {
-        e.preventDefault();
-        setLoading(true);
-        try {
-            signInWithPopup(auth, provider).then((result) => {
-                // This gives you a Google Access Token. You can use it to access the Google API.
-                const credential =
-                    GoogleAuthProvider.credentialFromResult(result);
-                const token = credential.accessToken;
-                // The signed-in user info.
-                const user = result.user;
-                // ...
-                dispatch({
-                    type: "LOGGED_IN_USER",
-                    payload: {
-                        email: user.email,
-                        token: token,
-                    },
-                });
-                toast.success("Login Successful");
+    const handleGoogleLogin = async () => {
+        auth.signInWithPopup(googleAuthProvider)
+            .then(async (result) => {
+                const { user } = result;
+                const idTokenResult = await user.getIdTokenResult();
+
+                createOrUpdateUser(idTokenResult.token)
+                    .then((res) =>
+                        dispatch({
+                            type: "LOGGED_IN_USER",
+                            payload: {
+                                name: res.data.name,
+                                email: res.data.email,
+                                token: idTokenResult.token,
+                                roles: res.data.roles,
+                                _id: res.data._id,
+                            },
+                        })
+                    )
+                    .catch();
+                // dispatch({
+                //     type: "LOGGED_IN_USER",
+                //     payload: {
+                //         email: user.email,
+                //         token: idTokenResult.token,
+                //     },
+                // });
                 navigate("/");
+            })
+            .catch((err) => {
+                console.log(err);
+                toast.error(err.message);
             });
-        } catch (error) {
-            console.log(error);
-            toast.error(error.message);
-            setLoading(false);
-        }
     };
 
     return (

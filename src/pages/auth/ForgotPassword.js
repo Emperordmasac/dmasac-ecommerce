@@ -1,6 +1,7 @@
 //Internal import
 import { useState, useEffect } from "react";
-import { getAuth, sendPasswordResetEmail } from "firebase/auth";
+// import { getAuth, sendPasswordResetEmail } from "firebase/auth";
+import { auth } from "../../utils/firebase";
 
 //External Import
 import { toast } from "react-toastify";
@@ -12,7 +13,7 @@ const ForgotPassword = () => {
     const [loading, setLoading] = useState(false);
 
     let navigate = useNavigate();
-    const auth = getAuth();
+    // const auth = getAuth();
     const { user } = useSelector((state) => ({ ...state }));
 
     useEffect(() => {
@@ -28,21 +29,35 @@ const ForgotPassword = () => {
             url: process.env.REACT_APP_FORGOT_PASSWORD_URL,
             handleCodeInApp: true,
         };
-        sendPasswordResetEmail(auth, email, config)
+        // sendPasswordResetEmail(auth, email, config)
+        //     .then(() => {
+        //         // Password reset email sent!
+        //         // ..
+        //         setEmail("");
+        //         setLoading(false);
+        //         toast.success(
+        //             `An Email has been sent to ${email}. Click the  link to reset your password`
+        //         );
+        //         navigate("/login");
+        //     })
+        //     .catch((error) => {
+        //         setLoading(false);
+        //         console.log(error);
+        //         toast.error("email not found");
+        //     });
+
+        await auth
+            .sendPasswordResetEmail(email, config)
             .then(() => {
-                // Password reset email sent!
-                // ..
                 setEmail("");
                 setLoading(false);
-                toast.success(
-                    `An Email has been sent to ${email}. Click the  link to reset your password`
-                );
+                toast.success("Check your email for password reset link");
                 navigate("/login");
             })
             .catch((error) => {
                 setLoading(false);
-                console.log(error);
-                toast.error("email not found");
+                toast.error(error.message);
+                console.log("ERROR MSG IN FORGOT PASSWORD", error);
             });
     };
 

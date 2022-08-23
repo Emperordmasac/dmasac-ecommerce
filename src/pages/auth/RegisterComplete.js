@@ -1,8 +1,8 @@
 // Internal import
 import { useState, useEffect } from "react";
 import { auth } from "../../utils/firebase";
-import { signInWithEmailLink } from "firebase/auth";
-import { updatePassword } from "firebase/auth";
+// import { signInWithEmailLink } from "firebase/auth";
+// import { updatePassword } from "firebase/auth";
 
 // External import
 import { toast } from "react-toastify";
@@ -45,24 +45,47 @@ const CompleteRegistrationForm = () => {
             return;
         }
 
+        // try {
+        //     const result = await signInWithEmailLink(
+        //         auth,
+        //         email,
+        //         window.location.href
+        //     );
+        //     if (result.user.emailVerified) {
+        //         window.localStorage.removeItem("emailForRegistration");
+        //         let user = auth.currentUser;
+        //         await updatePassword(user, password);
+        //         const idTokenResult = await user.getIdTokenResult();
+        //         console.log("----->", idTokenResult);
+        //         // redirect
+        //         navigate("/");
+        //     }
+        // } catch (error) {
+        //     console.log(error);
+        //     toast.error(error);
+        // }
+
         try {
-            const result = await signInWithEmailLink(
-                auth,
+            const result = await auth.signInWithEmailLink(
                 email,
                 window.location.href
             );
+            //   console.log("RESULT", result);
             if (result.user.emailVerified) {
+                // remove user email fom local storage
                 window.localStorage.removeItem("emailForRegistration");
+                // get user id token
                 let user = auth.currentUser;
-                await updatePassword(user, password);
+                await user.updatePassword(password);
                 const idTokenResult = await user.getIdTokenResult();
-                console.log("----->", idTokenResult);
+                // redux store
+                console.log("user", user, "idTokenResult", idTokenResult);
                 // redirect
                 navigate("/");
             }
         } catch (error) {
             console.log(error);
-            toast.error(error);
+            toast.error(error.message);
         }
     };
 

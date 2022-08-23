@@ -11,7 +11,8 @@ import {
 } from "@ant-design/icons";
 import { Menu } from "antd";
 import { Link } from "react-router-dom";
-import { getAuth, signOut } from "firebase/auth";
+// import { getAuth, signOut } from "firebase/auth";
+import firebase from "firebase";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
@@ -29,19 +30,26 @@ const Header = () => {
     };
 
     const handleLogout = () => {
-        let auth = getAuth();
-        try {
-            signOut(auth).then(() => {
-                dispatch({
-                    type: "LOGOUT",
-                    payload: null,
-                });
-                toast.success("Logout Successful");
-                navigate("login");
-            });
-        } catch (error) {
-            console.log(error);
-        }
+        firebase.auth().signOut();
+        dispatch({
+            type: "LOGOUT",
+            payload: null,
+        });
+        toast.success("Logout Successful");
+        navigate("login");
+        // let auth = getAuth();
+        // try {
+        //     signOut(auth).then(() => {
+        //         dispatch({
+        //             type: "LOGOUT",
+        //             payload: null,
+        //         });
+        //         toast.success("Logout Successful");
+        //         navigate("login");
+        //     });
+        // } catch (error) {
+        //     console.log(error);
+        // }
     };
 
     return (
