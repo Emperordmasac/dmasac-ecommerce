@@ -1,7 +1,6 @@
 // Internal import
 import { useState, useEffect } from "react";
 import { auth } from "../../utils/firebase";
-// import { sendSignInLinkToEmail } from "firebase/auth";
 
 // External import
 import { toast } from "react-toastify";
@@ -40,8 +39,6 @@ const RegisterForm = () => {
             handleCodeInApp: true,
         };
 
-        // sendSignInLinkToEmail
-        // await sendSignInLinkToEmail(auth, email, config);
         await auth.sendSignInLinkToEmail(email, config);
         toast.success(
             `An Email has been sent to ${email}. Click the  link to complete your registration`

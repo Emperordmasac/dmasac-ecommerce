@@ -6,12 +6,6 @@ import { auth, googleAuthProvider } from "../../utils/firebase";
 import { toast } from "react-toastify";
 import { Button } from "antd";
 import { MailOutlined, GoogleOutlined } from "@ant-design/icons";
-// import {
-//     getAuth,
-//     signInWithEmailAndPassword,
-//     GoogleAuthProvider,
-//     signInWithPopup,
-// } from "firebase/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -41,7 +35,6 @@ const LoginForm = ({ setLoading }) => {
 
     let navigate = useNavigate();
     let dispatch = useDispatch();
-    // let provider = new GoogleAuthProvider();
 
     const { user } = useSelector((state) => ({ ...state }));
 
@@ -49,8 +42,6 @@ const LoginForm = ({ setLoading }) => {
         if (user && user.token) navigate("/");
         // eslint-disable-next-line
     }, [user]);
-
-    // const auth = getAuth();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -61,7 +52,6 @@ const LoginForm = ({ setLoading }) => {
                 email,
                 password
             );
-            // console.log(result);
             const { user } = result;
             const idTokenResult = await user.getIdTokenResult();
 
@@ -108,13 +98,6 @@ const LoginForm = ({ setLoading }) => {
                         })
                     )
                     .catch();
-                // dispatch({
-                //     type: "LOGGED_IN_USER",
-                //     payload: {
-                //         email: user.email,
-                //         token: idTokenResult.token,
-                //     },
-                // });
                 navigate("/");
             })
             .catch((err) => {

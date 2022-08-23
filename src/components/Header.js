@@ -11,7 +11,6 @@ import {
 } from "@ant-design/icons";
 import { Menu } from "antd";
 import { Link } from "react-router-dom";
-// import { getAuth, signOut } from "firebase/auth";
 import firebase from "firebase";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -37,19 +36,6 @@ const Header = () => {
         });
         toast.success("Logout Successful");
         navigate("login");
-        // let auth = getAuth();
-        // try {
-        //     signOut(auth).then(() => {
-        //         dispatch({
-        //             type: "LOGOUT",
-        //             payload: null,
-        //         });
-        //         toast.success("Logout Successful");
-        //         navigate("login");
-        //     });
-        // } catch (error) {
-        //     console.log(error);
-        // }
     };
 
     return (
@@ -97,37 +83,3 @@ const Header = () => {
 };
 
 export default Header;
-
-// const items = [
-//     {
-//         label: "Home",
-//         key: "home",
-//         icon: <AppstoreOutlined />,
-//     },
-//     {
-//         label: "Login",
-//         key: "login",
-//         icon: <UserOutlined />,
-//     },
-//     {
-//         label: "Register",
-//         key: "register",
-//         marginLeft: "20rem",
-//         icon: <UserAddOutlined />,
-//     },
-//     {
-//         label: "Username",
-//         key: "SubMenu",
-//         icon: <SettingOutlined />,
-//         children: [
-//             {
-//                 label: "Option 1",
-//                 key: "setting:1",
-//             },
-//             {
-//                 label: "Option 2",
-//                 key: "setting:2",
-//             },
-//         ],
-//     },
-// ];
