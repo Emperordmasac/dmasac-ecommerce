@@ -69,7 +69,7 @@ const LoginForm = ({ setLoading }) => {
                     })
                 )
                 .catch();
-
+            toast.success("Login Successful");
             navigate("/");
         } catch (error) {
             console.log(error);
@@ -98,6 +98,7 @@ const LoginForm = ({ setLoading }) => {
                         })
                     )
                     .catch();
+                toast.success("Login Successful");
                 navigate("/");
             })
             .catch((err) => {
