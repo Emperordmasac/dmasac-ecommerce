@@ -8,6 +8,8 @@ import RegisterComplete from "./pages/auth/RegisterComplete";
 import ForgotPassword from "./pages/auth/ForgotPassword";
 import { auth } from "./utils/firebase";
 import { currentUser } from "./functions/auth";
+import Admin from "./pages/admin/admin";
+import User from "./pages/User/User";
 
 // External import
 import { Route, Routes } from "react-router-dom";
@@ -63,6 +65,8 @@ const App = () => {
                     path="/forgot/password"
                     element={<ForgotPassword />}
                 />
+                <Route exact path="/admin/dashboard" element={<Admin />} />
+                <Route exact path="/user/history" element={<User />} />
             </Routes>
         </>
     );

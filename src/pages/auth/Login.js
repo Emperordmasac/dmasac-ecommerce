@@ -38,10 +38,19 @@ const LoginForm = ({ setLoading }) => {
 
     const { user } = useSelector((state) => ({ ...state }));
 
-    useEffect(() => {
-        if (user && user.token) navigate("/");
-        // eslint-disable-next-line
-    }, [user]);
+    const roleBasedRediect = (res) => {
+        console.log("role check--->", res.data.role);
+        if (res.data.role === "admin") {
+            navigate("/admin/dashboard");
+        } else {
+            navigate("/user/history");
+        }
+    };
+
+    // useEffect(() => {
+    //     if (user && user.token) navigate("/");
+    //     // eslint-disable-next-line
+    // }, [user]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -56,7 +65,7 @@ const LoginForm = ({ setLoading }) => {
             const idTokenResult = await user.getIdTokenResult();
 
             createOrUpdateUser(idTokenResult.token)
-                .then((res) =>
+                .then((res) => {
                     dispatch({
                         type: "LOGGED_IN_USER",
                         payload: {
@@ -66,12 +75,12 @@ const LoginForm = ({ setLoading }) => {
                             roles: res.data.role,
                             _id: res.data._id,
                         },
-                    })
-                )
+                    });
+                    roleBasedRediect(res);
+                })
                 .catch((error) => console.log(error));
 
             toast.success("Login Successful");
-            navigate("/");
         } catch (error) {
             console.log(error);
             toast.error(error.message);
@@ -86,7 +95,7 @@ const LoginForm = ({ setLoading }) => {
                 const idTokenResult = await user.getIdTokenResult();
 
                 createOrUpdateUser(idTokenResult.token)
-                    .then((res) =>
+                    .then((res) => {
                         dispatch({
                             type: "LOGGED_IN_USER",
                             payload: {
@@ -96,12 +105,12 @@ const LoginForm = ({ setLoading }) => {
                                 roles: res.data.role,
                                 _id: res.data._id,
                             },
-                        })
-                    )
+                        });
+                        roleBasedRediect(res);
+                    })
                     .catch((error) => console.log(error));
 
                 toast.success("Login Successful");
-                navigate("/");
             })
             .catch((err) => {
                 console.log(err);
