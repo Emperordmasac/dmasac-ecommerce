@@ -78,7 +78,7 @@ const CompleteRegistrationForm = () => {
                             },
                         })
                     )
-                    .catch();
+                    .catch((error) => console.log(error));
 
                 // redirect
                 navigate("/");
