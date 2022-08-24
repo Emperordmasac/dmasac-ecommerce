@@ -1,6 +1,7 @@
 // Internal import
 import { useState, useEffect } from "react";
 import { auth, googleAuthProvider } from "../../utils/firebase";
+import { createOrUpdateUser } from "../../functions/auth";
 
 // External import
 import { toast } from "react-toastify";
@@ -8,7 +9,6 @@ import { Button } from "antd";
 import { MailOutlined, GoogleOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
 
 const Login = () => {
     const [loading, setLoading] = useState(false);
@@ -63,7 +63,7 @@ const LoginForm = ({ setLoading }) => {
                             name: res.data.name,
                             email: res.data.email,
                             token: idTokenResult.token,
-                            roles: res.data.roles,
+                            roles: res.data.role,
                             _id: res.data._id,
                         },
                     })
@@ -92,7 +92,7 @@ const LoginForm = ({ setLoading }) => {
                                 name: res.data.name,
                                 email: res.data.email,
                                 token: idTokenResult.token,
-                                roles: res.data.roles,
+                                roles: res.data.role,
                                 _id: res.data._id,
                             },
                         })
@@ -160,18 +160,6 @@ const LoginForm = ({ setLoading }) => {
                 Forgot Password
             </Link>
         </form>
-    );
-};
-
-const createOrUpdateUser = async (authToken) => {
-    return await axios.post(
-        `${process.env.REACT_APP_API}/create_or_update_user`,
-        {},
-        {
-            headers: {
-                authToken,
-            },
-        }
     );
 };
 

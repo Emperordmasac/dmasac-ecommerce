@@ -1,10 +1,12 @@
 // Internal import
 import { useState, useEffect } from "react";
 import { auth } from "../../utils/firebase";
+import { createOrUpdateUser } from "../../functions/auth";
 
 // External import
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 const RegisterComplete = () => {
     return (
@@ -22,11 +24,17 @@ const RegisterComplete = () => {
 const CompleteRegistrationForm = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const navigate = useNavigate();
+
+    let navigate = useNavigate();
+    let dispatch = useDispatch();
+
+    const { user } = useSelector((state) => ({ ...state }));
 
     useEffect(() => {
         setEmail(window.localStorage.getItem("emailForRegistration"));
-    }, []);
+        if (user && user.token) navigate("/");
+        // eslint-disable-next-line
+    }, [user]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -55,6 +63,23 @@ const CompleteRegistrationForm = () => {
                 const idTokenResult = await user.getIdTokenResult();
                 // redux store
                 console.log("user", user, "idTokenResult", idTokenResult);
+
+                //backend call
+                createOrUpdateUser(idTokenResult.token)
+                    .then((res) =>
+                        dispatch({
+                            type: "LOGGED_IN_USER",
+                            payload: {
+                                name: res.data.name,
+                                email: res.data.email,
+                                token: idTokenResult.token,
+                                roles: res.data.role,
+                                _id: res.data._id,
+                            },
+                        })
+                    )
+                    .catch();
+
                 // redirect
                 navigate("/");
             }
