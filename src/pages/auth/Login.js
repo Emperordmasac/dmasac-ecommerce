@@ -47,10 +47,10 @@ const LoginForm = ({ setLoading }) => {
         }
     };
 
-    // useEffect(() => {
-    //     if (user && user.token) navigate("/");
-    //     // eslint-disable-next-line
-    // }, [user]);
+    useEffect(() => {
+        if (user && user.token) navigate("/");
+        // eslint-disable-next-line
+    }, [user]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();

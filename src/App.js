@@ -9,7 +9,8 @@ import ForgotPassword from "./pages/auth/ForgotPassword";
 import { auth } from "./utils/firebase";
 import { currentUser } from "./functions/auth";
 import Admin from "./pages/admin/admin";
-import User from "./pages/User/User";
+import History from "./pages/user/History";
+import UserRoute from "./components/routes/UserRoute";
 
 // External import
 import { Route, Routes } from "react-router-dom";
@@ -52,21 +53,23 @@ const App = () => {
             <Header />
             <ToastContainer />
             <Routes>
-                <Route exact path="/" element={<Home />} />
-                <Route exact path="/login" element={<Login />} />
-                <Route exact path="/register" element={<Register />} />
+                <Route path="/" element={<Home />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
                 <Route
-                    exact
                     path="/register/complete"
                     element={<RegisterComplete />}
                 />
+                <Route path="/forgot/password" element={<ForgotPassword />} />
+                <Route path="/admin/dashboard" element={<Admin />} />
                 <Route
-                    exact
-                    path="/forgot/password"
-                    element={<ForgotPassword />}
+                    path="/user/history"
+                    element={
+                        <UserRoute>
+                            <History />
+                        </UserRoute>
+                    }
                 />
-                <Route exact path="/admin/dashboard" element={<Admin />} />
-                <Route exact path="/user/history" element={<User />} />
             </Routes>
         </>
     );
