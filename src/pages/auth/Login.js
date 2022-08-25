@@ -31,7 +31,7 @@ const Login = () => {
 
 const LoginForm = ({ setLoading }) => {
     const [email, setEmail] = useState("horlaymilekan.dev@gmail.com");
-    const [password, setPassword] = useState("babaalaja");
+    const [password, setPassword] = useState("mosobalaje");
 
     let navigate = useNavigate();
     let dispatch = useDispatch();

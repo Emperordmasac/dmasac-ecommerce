@@ -10,7 +10,7 @@ const LoadingToRedirect = () => {
             setCountdown((currentcountdown) => --currentcountdown);
         }, 1000);
         //
-        countdown === 0 && navigate("/");
+        countdown === 0 && navigate("/login");
         //
         return () => {
             clearInterval(interval);
