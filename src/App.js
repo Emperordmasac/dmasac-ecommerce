@@ -4,6 +4,7 @@ import Header from "./components/navigation/Header";
 import { auth } from "./utils/firebase";
 import { currentUser } from "./functions/auth";
 import UserRoute from "./components/routes/UserRoute";
+import AdminRoute from "./components/routes/AdminRoute";
 
 // External import
 import { Route, Routes } from "react-router-dom";
@@ -17,7 +18,7 @@ import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import RegisterComplete from "./pages/auth/RegisterComplete";
 import ForgotPassword from "./pages/auth/ForgotPassword";
-import Admin from "./pages/admin/admin";
+import AdminDashboard from "./pages/admin/AdminDashboard";
 import History from "./pages/user/History";
 import Password from "./pages/user/Password";
 import Wishlist from "./pages/user/Wishlist";
@@ -65,8 +66,15 @@ const App = () => {
                     element={<RegisterComplete />}
                 />
                 <Route path="/forgot/password" element={<ForgotPassword />} />
-                <Route path="/admin/dashboard" element={<Admin />} />
-
+                {/* USER PROTECTED ROUTES */}
+                <Route
+                    path="/admin/dashboard"
+                    element={
+                        <AdminRoute>
+                            <AdminDashboard />
+                        </AdminRoute>
+                    }
+                />
                 {/* USER PROTECTED ROUTES */}
                 <Route
                     path="/user/history"
