@@ -1,3 +1,18 @@
+## Dmasac E-Commerce
+
+A Full Stack E-commerce Application
+<>still working on the kinks</>
+
+## About the Stack
+
+### Backend
+
+The backend is wrtten in NodeJs which is in another Repository [backnd repo](https://github.com/Emperordmasac/dmasac-ecommerce-server).
+
+### Frontend
+
+The Frontend directory contains a complete React frontend to consume the data from the Node server. This project was created with Create React App.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
