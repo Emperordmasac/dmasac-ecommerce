@@ -40,7 +40,7 @@ const App = () => {
                                 name: res.data.name,
                                 email: res.data.email,
                                 token: idTokenResult.token,
-                                roles: res.data.role,
+                                role: res.data.role,
                                 _id: res.data._id,
                             },
                         })
