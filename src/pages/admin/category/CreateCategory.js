@@ -1,15 +1,15 @@
 //INTERNAL IMPORT
-import AdminNav from "../../components/navigation/AdminNav";
+import AdminNav from "../../../components/navigation/AdminNav";
 
-const AdminDashboard = () => (
+const CreateCategory = () => (
     <div className="container-fluid">
         <div className="row">
             <div className="col-md-2">
                 <AdminNav />
             </div>
-            <div className="col">Admin Dashboard Page</div>
+            <div className="col">Create Category Page</div>
         </div>
     </div>
 );
 
-export default AdminDashboard;
+export default CreateCategory;
