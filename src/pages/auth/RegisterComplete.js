@@ -61,9 +61,6 @@ const CompleteRegistrationForm = () => {
                 let user = auth.currentUser;
                 await user.updatePassword(password);
                 const idTokenResult = await user.getIdTokenResult();
-                // redux store
-                console.log("user", user, "idTokenResult", idTokenResult);
-
                 //backend call
                 createOrUpdateUser(idTokenResult.token)
                     .then((res) =>
@@ -78,13 +75,12 @@ const CompleteRegistrationForm = () => {
                             },
                         })
                     )
-                    .catch((error) => console.log(error));
+                    .catch((error) => toast.error(error));
 
                 // redirect
                 navigate("/");
             }
         } catch (error) {
-            console.log(error);
             toast.error(error.message);
         }
     };

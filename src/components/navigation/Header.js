@@ -57,12 +57,12 @@ const Header = () => {
                     className="float-right"
                 >
                     {user && user.role === "subscriber" && (
-                        <Item>
+                        <Item key="user-dashboard">
                             <Link to="/user/history">Dashboard</Link>
                         </Item>
                     )}
                     {user && user.role === "admin" && (
-                        <Item>
+                        <Item key="admin-dashboard">
                             <Link to="/admin/dashboard">Dashboard</Link>
                         </Item>
                     )}

@@ -1,5 +1,5 @@
 // Internal import
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { auth, googleAuthProvider } from "../../utils/firebase";
 import { createOrUpdateUser } from "../../functions/auth";
 
@@ -7,7 +7,7 @@ import { createOrUpdateUser } from "../../functions/auth";
 import { toast } from "react-toastify";
 import { Button } from "antd";
 import { MailOutlined, GoogleOutlined } from "@ant-design/icons";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
@@ -36,21 +36,13 @@ const LoginForm = ({ setLoading }) => {
     let navigate = useNavigate();
     let dispatch = useDispatch();
 
-    const { user } = useSelector((state) => ({ ...state }));
-
     const roleBasedRediect = (res) => {
-        console.log("role check--->", res.data.role);
         if (res.data.role === "admin") {
             navigate("/admin/dashboard");
         } else {
             navigate("/user/history");
         }
     };
-
-    useEffect(() => {
-        if (user && user.token) navigate("/");
-        // eslint-disable-next-line
-    }, [user]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -78,11 +70,10 @@ const LoginForm = ({ setLoading }) => {
                     });
                     roleBasedRediect(res);
                 })
-                .catch((error) => console.log(error));
+                .catch((error) => toast.error(error));
 
             toast.success("Login Successful");
         } catch (error) {
-            console.log(error);
             toast.error(error.message);
             setLoading(false);
         }
@@ -108,12 +99,11 @@ const LoginForm = ({ setLoading }) => {
                         });
                         roleBasedRediect(res);
                     })
-                    .catch((error) => console.log(error));
+                    .catch((error) => toast.error(error));
 
                 toast.success("Login Successful");
             })
             .catch((err) => {
-                console.log(err);
                 toast.error(err.message);
             });
     };

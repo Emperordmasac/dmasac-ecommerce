@@ -28,7 +28,6 @@ const PasswordUpdateForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-        // console.log(password);
 
         await auth.currentUser
             .updatePassword(password)

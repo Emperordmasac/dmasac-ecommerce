@@ -3,14 +3,15 @@ import { useEffect } from "react";
 import Header from "./components/navigation/Header";
 import { auth } from "./utils/firebase";
 import { currentUser } from "./functions/auth";
-import UserRoute from "./components/routes/UserRoute";
-import AdminRoute from "./components/routes/AdminRoute";
+import UserRoute from "./routes/UserRoute";
+import AdminRoute from "./routes/AdminRoute";
 
 // External import
 import { Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 
 // Pages import
 import Home from "./pages/Home";
@@ -32,7 +33,6 @@ const App = () => {
         const unsubscribe = auth.onAuthStateChanged(async (user) => {
             if (user) {
                 const idTokenResult = await user.getIdTokenResult();
-                console.log("user", user);
                 //backend call
                 currentUser(idTokenResult.token)
                     .then((res) =>
@@ -47,7 +47,7 @@ const App = () => {
                             },
                         })
                     )
-                    .catch((error) => console.log(error));
+                    .catch((error) => toast.error(error));
             }
         });
         // cleanup
