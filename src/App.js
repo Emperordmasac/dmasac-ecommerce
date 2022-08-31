@@ -20,6 +20,7 @@ import RegisterComplete from "./pages/auth/RegisterComplete";
 import ForgotPassword from "./pages/auth/ForgotPassword";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import CreateCategory from "./pages/admin/category/CreateCategory";
+import UpdateCategory from "./pages/admin/category/UpdateCategory";
 import History from "./pages/user/History";
 import Password from "./pages/user/Password";
 import Wishlist from "./pages/user/Wishlist";
@@ -82,6 +83,15 @@ const App = () => {
                     element={
                         <AdminRoute>
                             <CreateCategory />
+                        </AdminRoute>
+                    }
+                />
+
+                <Route
+                    path="/admin/category/:slug"
+                    element={
+                        <AdminRoute>
+                            <UpdateCategory />
                         </AdminRoute>
                     }
                 />
