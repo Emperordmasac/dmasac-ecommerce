@@ -1,7 +1,7 @@
 // Internal import
 import { useState } from "react";
-import { auth, googleAuthProvider } from "../../utils/firebase";
-import { createOrUpdateUser } from "../../functions/auth";
+import { auth, googleAuthProvider } from "../../config/firebase";
+import { createOrUpdateUser } from "../../utils/auth";
 
 // External import
 import { toast } from "react-toastify";

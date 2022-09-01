@@ -1,7 +1,7 @@
 // Internal import
 import { useState, useEffect } from "react";
-import { auth } from "../../utils/firebase";
-import { createOrUpdateUser } from "../../functions/auth";
+import { auth } from "../../config/firebase";
+import { createOrUpdateUser } from "../../utils/auth";
 
 // External import
 import { toast } from "react-toastify";

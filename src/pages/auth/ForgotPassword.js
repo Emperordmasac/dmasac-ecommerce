@@ -1,6 +1,6 @@
 //Internal import
 import { useState, useEffect } from "react";
-import { auth } from "../../utils/firebase";
+import { auth } from "../../config/firebase";
 
 //External Import
 import { toast } from "react-toastify";

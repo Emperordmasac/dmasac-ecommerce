@@ -1,6 +1,6 @@
 // INTERNAL IMPORT
-import LoadingToRedirect from "../functions/LoadingToRedirect";
-import { currentAdmin } from "../functions/auth";
+import LoadingToRedirect from "../utils/LoadingToRedirect";
+import { currentAdmin } from "../utils/auth";
 import { useState, useEffect } from "react";
 
 // EXTERNAL IMPORT

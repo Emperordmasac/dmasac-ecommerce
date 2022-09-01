@@ -4,8 +4,8 @@ import {
     createCategory,
     getCategories,
     removeCategory,
-} from "../../functions/category";
-import LocalSearch from "./LocalSearch";
+} from "../../../utils/category";
+import LocalSearch from "../../../utils/LocalSearch";
 
 //EXTERNAL IMPORT
 import { useSelector } from "react-redux";

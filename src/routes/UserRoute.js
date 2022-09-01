@@ -1,6 +1,6 @@
 // import { Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import LoadingToRedirect from "../functions/LoadingToRedirect";
+import LoadingToRedirect from "../utils/LoadingToRedirect";
 
 const UserRoute = ({ children }) => {
     let { user } = useSelector((state) => ({ ...state }));

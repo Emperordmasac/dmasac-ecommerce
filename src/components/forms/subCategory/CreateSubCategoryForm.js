@@ -1,12 +1,12 @@
 //INTERNAL IMPORT
 import { useEffect, useState } from "react";
-import { getCategories } from "../../../functions/category";
+import { getCategories } from "../../../utils/category";
 import {
     createSubCategory,
     getSubCategories,
     removeSubCategory,
-} from "../../../functions/subCategory";
-import LocalSearch from "../LocalSearch";
+} from "../../../utils/subCategory";
+import LocalSearch from "../../../utils/LocalSearch";
 
 //EXTERNAL IMPORT
 import { useSelector } from "react-redux";

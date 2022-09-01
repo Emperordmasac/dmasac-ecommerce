@@ -1,8 +1,8 @@
 // Internal import
 import { useEffect } from "react";
 import Header from "./components/navigation/Header";
-import { auth } from "./utils/firebase";
-import { currentUser } from "./functions/auth";
+import { auth } from "./config/firebase";
+import { currentUser } from "./utils/auth";
 import UserRoute from "./routes/UserRoute";
 import AdminRoute from "./routes/AdminRoute";
 

@@ -1,9 +1,6 @@
 //INTERNAL IMPORT
 import { useEffect, useState } from "react";
-import {
-    getSubCategory,
-    updateSubCategory,
-} from "../../../functions/subCategory";
+import { getSubCategory, updateSubCategory } from "../../../utils/subCategory";
 
 //EXTERNAL IMPORT
 import { useSelector } from "react-redux";

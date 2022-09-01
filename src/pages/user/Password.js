@@ -1,5 +1,5 @@
 // INTERNAL IMPORT
-import { auth } from "../../utils/firebase";
+import { auth } from "../../config/firebase";
 import { useState } from "react";
 import UserNav from "../../components/navigation/UserNav";
 
