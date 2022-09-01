@@ -126,7 +126,7 @@ const CreateSubCategoryForm = () => {
                             key={subCategory._id}
                         >
                             {subCategory.name}
-                            <Link to={`/admin/category/${subCategory.slug}`}>
+                            <Link to={`/admin/sub/${subCategory.slug}`}>
                                 <span className="btn btn-sm float-right">
                                     <EditOutlined className="text-warning" />
                                 </span>
