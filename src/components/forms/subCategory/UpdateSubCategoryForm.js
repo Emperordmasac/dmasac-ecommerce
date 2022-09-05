@@ -1,6 +1,7 @@
 //INTERNAL IMPORT
 import { useEffect, useState } from "react";
 import { getSubCategory, updateSubCategory } from "../../../utils/subCategory";
+import { getCategories } from "../../../utils/category";
 
 //EXTERNAL IMPORT
 import { useSelector } from "react-redux";
@@ -10,25 +11,36 @@ import { useNavigate, useParams } from "react-router-dom";
 const UpdateSubCategoryForm = () => {
     const [name, setName] = useState("");
     const [loading, setLoading] = useState(false);
+    const [categories, setCategories] = useState([]);
+    const [selectedCategory, setSelectedCategory] = useState("");
 
     let { user } = useSelector((state) => ({ ...state }));
     let navigate = useNavigate();
     let params = useParams();
 
     useEffect(() => {
-        loadCategory();
+        loadCategories();
+        loadSubCategory();
         // eslint-disable-next-line
     }, []);
 
-    const loadCategory = () =>
-        getSubCategory(params.slug).then((promise) =>
-            setName(promise.data.name)
-        );
+    const loadCategories = () =>
+        getCategories().then((category) => setCategories(category.data));
+
+    const loadSubCategory = () =>
+        getSubCategory(params.slug).then((promise) => {
+            setName(promise.data.name);
+            setSelectedCategory(promise.data.parent);
+        });
 
     const handleSubmit = (e) => {
         e.preventDefault();
         setLoading(true);
-        updateSubCategory(params.slug, { name }, user.token)
+        updateSubCategory(
+            params.slug,
+            { name, parent: selectedCategory },
+            user.token
+        )
             .then((res) => {
                 setLoading(false);
                 setName("");
@@ -49,6 +61,28 @@ const UpdateSubCategoryForm = () => {
             ) : (
                 <h4>Update SubCategory</h4>
             )}
+
+            <div className="form-group">
+                <label>Choose a Category</label>
+                <select
+                    name="category"
+                    className="form-control"
+                    onChange={(e) => setSelectedCategory(e.target.value)}
+                >
+                    <option>select</option>
+                    {categories.length > 0 &&
+                        categories.map((cat) => (
+                            <option
+                                key={cat._id}
+                                value={cat._id}
+                                selected={cat._id === selectedCategory}
+                            >
+                                {cat.name}
+                            </option>
+                        ))}
+                </select>
+            </div>
+            <br />
 
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
