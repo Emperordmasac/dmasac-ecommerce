@@ -24,6 +24,7 @@ import CreateCategory from "./pages/admin/category/CreateCategory";
 import UpdateCategory from "./pages/admin/category/UpdateCategory";
 import CreateSubCategory from "./pages/admin/subCategory/CreateSubCategory";
 import UpdateSubCategory from "./pages/admin/subCategory/UpdateSubCategory";
+import CreateProduct from "./pages/admin/product/CreateProduct";
 import History from "./pages/user/History";
 import Password from "./pages/user/Password";
 import Wishlist from "./pages/user/Wishlist";
@@ -112,6 +113,15 @@ const App = () => {
                     element={
                         <AdminRoute>
                             <UpdateSubCategory />
+                        </AdminRoute>
+                    }
+                />
+
+                <Route
+                    path="/admin/product"
+                    element={
+                        <AdminRoute>
+                            <CreateProduct />
                         </AdminRoute>
                     }
                 />
