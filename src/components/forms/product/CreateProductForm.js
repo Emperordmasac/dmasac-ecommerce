@@ -1,10 +1,14 @@
 //INTERNAL IMPORT
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { createProduct } from "../../../utils/product";
+import { getCategories, getCategorySubs } from "../../../utils/category";
 
 //EXTERNAL IMPORT
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import { Select } from "antd";
+
+const { Option } = Select;
 
 const productInitials = {
     title: "",
@@ -25,8 +29,20 @@ const productInitials = {
 const CreatProductForm = () => {
     const [productValues, SetProductValues] = useState(productInitials);
     const [loading, setLoading] = useState(false);
+    const [subOption, setSubOption] = useState([]);
+    const [showSubs, setShowSubs] = useState(false);
+
+    useEffect(() => {
+        loadCategories();
+        // eslint-disable-next-line
+    }, []);
 
     const { user } = useSelector((state) => ({ ...state }));
+
+    const loadCategories = () =>
+        getCategories().then((category) =>
+            SetProductValues({ ...productValues, categories: category.data })
+        );
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -34,18 +50,34 @@ const CreatProductForm = () => {
         createProduct(productValues, user.token)
             .then((res) => {
                 setLoading(false);
-                toast.success(`${res.data.title} Product Successfully Created`);
+                //toast.success(`${res.data.title} Product Successfully Created`);\
+                window.alert(`${res.data.title} Product Successfully Created`);
+                window.location.reload();
             })
             .catch((error) => {
                 setLoading(false);
-                if (error.response.status === 400)
-                    toast.error(error.response.data);
+                toast.error(error.response.data.error);
+                // if (error.response.status === 400)
+                //     toast.error(error.response.data);
             });
     };
 
     const handleChange = (e) => {
         SetProductValues({ ...productValues, [e.target.name]: e.target.value });
         // console.log(e.target.name, "------", e.target.value);
+    };
+
+    const handleCategoryChange = (e) => {
+        e.preventDefault();
+        SetProductValues({
+            ...productValues,
+            subs: [],
+            category: e.target.value,
+        });
+        getCategorySubs(e.target.value).then((res) => {
+            setSubOption(res.data);
+        });
+        setShowSubs(true);
     };
 
     return (
@@ -148,7 +180,48 @@ const CreatProductForm = () => {
                         ))}
                     </select>
                 </div>
-
+                <br />
+                <div className="form-group">
+                    <label>Choose a Category</label>
+                    <select
+                        name="category"
+                        className="form-control"
+                        onChange={handleCategoryChange}
+                    >
+                        <option>select</option>
+                        {productValues.categories.length > 0 &&
+                            productValues.categories.map((cat) => (
+                                <option key={cat._id} value={cat._id}>
+                                    {cat.name}
+                                </option>
+                            ))}
+                    </select>
+                </div>
+                <br />
+                {showSubs && (
+                    <div>
+                        <label>Choose a Sub Category</label>
+                        <Select
+                            mode="multiple"
+                            style={{ width: "100%" }}
+                            placeholder="select a sub category"
+                            value={productValues.subs}
+                            onChange={(value) => {
+                                SetProductValues({
+                                    ...productValues,
+                                    subs: value,
+                                });
+                            }}
+                        >
+                            {subOption.length &&
+                                subOption.map((subs) => (
+                                    <Option key={subs._id} value={subs._id}>
+                                        {subs.name}
+                                    </Option>
+                                ))}
+                        </Select>
+                    </div>
+                )}
                 <br />
                 <button className="btn btn-outlined-info mb-3">Create</button>
             </form>
