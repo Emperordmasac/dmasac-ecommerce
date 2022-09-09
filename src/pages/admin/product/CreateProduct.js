@@ -1,6 +1,7 @@
 //INTERNAL IMPORT
 import AdminNav from "../../../components/navigation/AdminNav";
 import CreatProductForm from "../../../components/forms/product/CreateProductForm";
+import ImageUpload from "../../../components/forms/product/ImageUpload";
 
 const CreateProduct = () => (
     <div className="container-fluid">
@@ -9,6 +10,7 @@ const CreateProduct = () => (
                 <AdminNav />
             </div>
             <div className="col">
+                <ImageUpload />
                 <CreatProductForm />
             </div>
         </div>
