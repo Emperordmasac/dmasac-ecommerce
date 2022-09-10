@@ -2,11 +2,13 @@
 import { useState, useEffect } from "react";
 import { createProduct } from "../../../utils/product";
 import { getCategories, getCategorySubs } from "../../../utils/category";
+import ImageUpload from "./ImageUpload";
 
 //EXTERNAL IMPORT
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { Select } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 
 const { Option } = Select;
 
@@ -83,10 +85,16 @@ const CreatProductForm = () => {
     return (
         <>
             {loading ? (
-                <h4 className="text-danger">Loading...</h4>
+                <LoadingOutlined className="text-danger h1" />
             ) : (
                 <h4>Create Product</h4>
             )}
+            <ImageUpload
+                productValues={productValues}
+                SetProductValues={SetProductValues}
+                setLoading={setLoading}
+            />
+            <br />
 
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
