@@ -1,4 +1,4 @@
-import UserNav from "../../components/navigation/UserNav";
+import { UserNav } from "../../components";
 
 const Wishlist = () => (
     <div className="container-fluid">

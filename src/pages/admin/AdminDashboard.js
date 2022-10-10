@@ -1,30 +1,7 @@
 //INTERNAL IMPORT
-import { useState, useEffect } from "react";
-import AdminNav from "../../components/navigation/AdminNav";
-import { getProductByCount } from "../../utils/product";
-import AdminProductCard from "../../components/cards/AdminProductCard";
+import { AdminNav } from "../../components";
 
 const AdminDashboard = () => {
-    const [loading, setLoading] = useState(false);
-    const [products, setProducts] = useState([]);
-
-    useEffect(() => {
-        loadAllProducts(100);
-    }, []);
-
-    const loadAllProducts = (count) => {
-        setLoading(true);
-        getProductByCount(count)
-            .then((res) => {
-                setLoading(false);
-                setProducts(res.data);
-            })
-            .catch((error) => {
-                setLoading(false);
-                console.log(error);
-            });
-    };
-
     return (
         <div className="container-fluid">
             <div className="row">
@@ -32,20 +9,7 @@ const AdminDashboard = () => {
                     <AdminNav />
                 </div>
 
-                <div className="col-md-10">
-                    {loading ? (
-                        <h4 className="text-danger">Loading</h4>
-                    ) : (
-                        <h4>All Products</h4>
-                    )}
-                    <div className="row">
-                        {products.map((product) => (
-                            <div key={product._id} className="col-md-4">
-                                <AdminProductCard product={product} />
-                            </div>
-                        ))}
-                    </div>
-                </div>
+                <div className="col-md-10">AdminDashboard</div>
             </div>
         </div>
     );

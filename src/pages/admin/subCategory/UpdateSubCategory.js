@@ -1,6 +1,5 @@
 //INTERNAL IMPORT
-import AdminNav from "../../../components/navigation/AdminNav";
-import UpdateSubCategoryForm from "../../../components/forms/subCategory/UpdateSubCategoryForm";
+import { UpdateSubCategoryForm, AdminNav } from "../../../components";
 
 const UpdateSubCategory = () => (
     <div className="container-fluid">

@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { createProduct } from "../../../utils/product";
 import { getCategories, getCategorySubs } from "../../../utils/category";
-import ImageUpload from "./ImageUpload";
+import { ImageUpload } from "../../../components";
 
 //EXTERNAL IMPORT
 import { useSelector } from "react-redux";

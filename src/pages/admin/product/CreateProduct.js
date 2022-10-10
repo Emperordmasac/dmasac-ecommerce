@@ -1,6 +1,5 @@
 //INTERNAL IMPORT
-import AdminNav from "../../../components/navigation/AdminNav";
-import CreatProductForm from "../../../components/forms/product/CreateProductForm";
+import { CreatProductForm, AdminNav } from "../../../components";
 
 const CreateProduct = () => (
     <div className="container-fluid">

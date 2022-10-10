@@ -1,6 +1,5 @@
 //INTERNAL IMPORT
-import AdminNav from "../../../components/navigation/AdminNav";
-import CreateCategoryForm from "../../../components/forms/category/CreateCategoryForm";
+import { CreateCategoryForm, AdminNav } from "../../../components";
 
 const CreateCategory = () => (
     <div className="container-fluid">

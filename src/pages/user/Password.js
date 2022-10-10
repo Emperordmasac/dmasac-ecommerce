@@ -1,7 +1,7 @@
 // INTERNAL IMPORT
 import { auth } from "../../config/firebase";
 import { useState } from "react";
-import UserNav from "../../components/navigation/UserNav";
+import { UserNav } from "../../components";
 
 // EXTERNAL IMPORT
 import { toast } from "react-toastify";

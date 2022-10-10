@@ -1,4 +1,4 @@
-import UserNav from "../../components/navigation/UserNav";
+import { UserNav } from "../../components";
 
 const History = () => (
     <div className="container-fluid">

@@ -5,7 +5,10 @@ import "mdb-react-ui-kit/dist/css/mdb.min.css";
 import "antd/dist/antd.min.css";
 import App from "./App";
 
+// react-router
 import { BrowserRouter as Router } from "react-router-dom";
+
+// react-redux
 import { legacy_createStore as createStore } from "redux";
 import { Provider } from "react-redux";
 import { composeWithDevTools } from "redux-devtools-extension";

@@ -1,12 +1,13 @@
 // Internal import
 import { useEffect } from "react";
-import Header from "./components/navigation/Header";
+import { Header } from "./components";
 import { auth } from "./config/firebase";
 import { currentUser } from "./utils/auth";
-import UserRoute from "./routes/UserRoute";
-import AdminRoute from "./routes/AdminRoute";
 
-// External import
+// Middlewares
+import { UserRoute, AdminRoute } from "./middlewares";
+
+// External  Library Import
 import { Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -14,20 +15,23 @@ import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 
 // Pages import
-import Home from "./pages/Home";
-import Login from "./pages/auth/Login";
-import Register from "./pages/auth/Register";
-import RegisterComplete from "./pages/auth/RegisterComplete";
-import ForgotPassword from "./pages/auth/ForgotPassword";
-import AdminDashboard from "./pages/admin/AdminDashboard";
-import CreateCategory from "./pages/admin/category/CreateCategory";
-import UpdateCategory from "./pages/admin/category/UpdateCategory";
-import CreateSubCategory from "./pages/admin/subCategory/CreateSubCategory";
-import UpdateSubCategory from "./pages/admin/subCategory/UpdateSubCategory";
-import CreateProduct from "./pages/admin/product/CreateProduct";
-import History from "./pages/user/History";
-import Password from "./pages/user/Password";
-import Wishlist from "./pages/user/Wishlist";
+import {
+    CreateCategory,
+    UpdateCategory,
+    AllProducts,
+    CreateProduct,
+    CreateSubCategory,
+    UpdateSubCategory,
+    AdminDashboard,
+    ForgotPassword,
+    Login,
+    Register,
+    RegisterComplete,
+    History,
+    Password,
+    Wishlist,
+    Home,
+} from "./pages";
 
 const App = () => {
     const dispatch = useDispatch();
@@ -63,6 +67,7 @@ const App = () => {
             <Header />
             <ToastContainer />
             <Routes>
+                {/* Authentications */}
                 <Route path="/" element={<Home />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
@@ -71,7 +76,10 @@ const App = () => {
                     element={<RegisterComplete />}
                 />
                 <Route path="/forgot/password" element={<ForgotPassword />} />
-                {/* USER PROTECTED ROUTES */}
+
+                {/* Pages */}
+
+                {/* ADMIN PROTECTED ROUTES */}
                 <Route
                     path="/admin/dashboard"
                     element={
@@ -118,6 +126,15 @@ const App = () => {
                 />
 
                 <Route
+                    path="/admin/products"
+                    element={
+                        <AdminRoute>
+                            <AllProducts />
+                        </AdminRoute>
+                    }
+                />
+
+                <Route
                     path="/admin/product"
                     element={
                         <AdminRoute>
@@ -127,6 +144,7 @@ const App = () => {
                 />
 
                 {/* USER PROTECTED ROUTES */}
+
                 <Route
                     path="/user/history"
                     element={
